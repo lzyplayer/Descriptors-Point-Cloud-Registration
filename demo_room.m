@@ -5,7 +5,7 @@ addpath('./flann/');
 addpath('./estimateRigidTransform');
 % load room;
 gridStep = 0.01;
-datapath = './data/red_room/';
+% datapath = './data/red_room/';
 % pre = 'bun';
 % scannum=length(dir(datapath))-2;
 % scannum=length(room);
@@ -79,6 +79,6 @@ Time = toc/60
 %     colorInfo{i}=clouds{i}.Color;
 % %     colorInfo{i}=data{i}(:,4:6);
 % end
-% figure;
-% 
-% Model=obtain_room_colorful(shape, p, N, s,colorInfo,res);
+figure;
+
+Model=obtain_room_colorful(pointcloud, p, N, s,10);
