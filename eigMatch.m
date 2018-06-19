@@ -6,7 +6,7 @@ params.checks = 64;
 radii = (0.5:0.5:2)*gridStep;
 
 [srcIdx,dist] = flann_search(srcDesp,tarDesp,1,params); % match with descriptors
-
+[dist,id]= sort(dist);
 %% aggregating each pair of correspondence for finding the best match
 M = size(srcSeed,2);
 N = size(tarSeed,2);
@@ -17,7 +17,9 @@ ovNum = ceil(overlap*N);
 distThr = 0.2/4*length(radii); 
 thetaThr = 10; 
 threshold = gridStep*gridStep;
-for n = 1:N
+  for i = 1:ceil(0.3*N)
+    n= id(i);
+%   for n = 1:N
     seed = srcSeed(:,seedIdx(n));
     seedNorm = srcNorm(:,seedIdx(n));
     
@@ -58,7 +60,6 @@ for n = 1:N
             matches = [matches; m idx(ol)];
         end
     end
-
     if(size(matches,1)>10)
         match_srcSeed = srcSeed(:,matches(:,1));
         match_tarSeed = tarSeed(:,matches(:,2));
@@ -78,6 +79,9 @@ for n = 1:N
         [index,dist] = flann_search(tarEst,tarSeed,1,params);
         [dist,ind] = sort(dist);        
         Err(n) = sum(sum((tarEst(:,index(ind(1:ovNum)))-tarSeed(:,ind(1:ovNum))).^2));
+    end
+    if (size(matches,1)> 0.65*size(srcDesp,2))
+        break;
     end
  end
 [v,idx] = min(Err);

@@ -1,4 +1,4 @@
-function [merClouds,srcDesp,srcSeed,srcNorm ] = readOutside( filepath,scannum ,gridstep )
+function [merClouds,srcDesp,srcSeed,srcNorm ] = readOutside( filepath,filePrefix,scannum ,gridstep ,s)
 %READROOM 此处显示有关此函数的摘要
 %   此处显示详细说明
     count=scannum*4-1;
@@ -7,7 +7,7 @@ function [merClouds,srcDesp,srcSeed,srcNorm ] = readOutside( filepath,scannum ,g
     srcDesp=cell(scannum,1);
     srcSeed=cell(scannum,1);
     srcNorm=cell(scannum,1);
-    clouds=readCloudCsv(filepath,count);
+    clouds=readCloudCsv(filepath,filePrefix,count,0.64,s); %0.64为摄像机头高度
     count=count+1;
     for i =1:scannum
         merClouds{i}=pcmerge(pcmerge(pcmerge(clouds{4*i-3},clouds{4*i-2},0.001),clouds{4*i-1},0.001),clouds{4*i},0.001);
