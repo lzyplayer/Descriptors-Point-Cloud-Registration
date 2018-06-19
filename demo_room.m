@@ -81,4 +81,4 @@ Time = toc/60
 % end
 figure;
 
-Model=obtain_room_colorful(pointcloud, p, N, s,10);
+Model=obtain_room_colorful(clouds, p, N, s);

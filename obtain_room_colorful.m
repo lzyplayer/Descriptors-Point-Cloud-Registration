@@ -1,4 +1,4 @@
-function [Model]=obtain_room_colorful(dataN, pM, N, s ,res)
+function [Model]=obtain_room_colorful(dataN, pM, N, s )
 
 % res= 1;
 Model= [];

@@ -1,7 +1,7 @@
-function [clouds,srcDesp,srcSeed,srcNorm] = readAllCloud( datapath,scannum,gridStep)
+function [clouds,srcDesp,srcSeed,srcNorm] = readAllCloud( datapath,gridStep)
 suf = '.ply';            
 files = dir([datapath '*' suf]);    
-id = 1:scannum
+id = 1:10
 for k = 1:length(files)
     filepath = [datapath files(k).name];    
     clouds{id(k)} = pcread(filepath);

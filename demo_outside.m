@@ -1,18 +1,24 @@
-% 这个算法是利用特征结合的算法来做的
+% 本算法特征结合应用到环境重建
 clc;clear;close all;
 
 addpath('./flann/');
 addpath('./estimateRigidTransform');
-
+% load room;
 gridStep = 0.01;
-datapath = './data/bunny/';
-pre = 'bun';
-
+filepath='./data/global_frame/';
+readnum=5;
+% datapath = './data/red_room/';
+% pre = 'bun';
+% scannum=length(dir(datapath))-2;
+% scannum=length(room);
 overlap = 0.4;
 res= 1;
-s= 1000;
-
-[clouds,Desp,Seed,Norm] = readAllCloud(datapath,gridStep);
+s=60;
+% data=room;
+% [clouds,Desp,Seed,Norm] = readAllCloud(datapath,scannum,gridStep);
+% [clouds,Desp,Seed,Norm] = readRoom(data,gridStep);
+% [clouds,Desp,Seed,Norm] = readRedCloud(gridStep);
+[clouds,Desp,Seed,Norm] = readOutside(filepath,readnum,gridStep);
 N = length(clouds);
 p(1).M = eye(4);   
 tarCloud = clouds{1};
@@ -33,7 +39,7 @@ while(~isempty(id))
         srcSeed = Seed{i};
         srcNorm = Norm{i};
         Data= srcCloud.Location(1:res:end,:)'*s;
-%         T = eigMatch(srcDesp,tarDesp,srcSeed,tarSeed,srcNorm,tarNorm,overlap,gridStep);
+%       T = eigMatch(srcDesp,tarDesp,srcSeed,tarSeed,srcNorm,tarNorm,overlap,gridStep);
         T = eigMatch(tarDesp,srcDesp,tarSeed,srcSeed,tarNorm,srcNorm,overlap,gridStep);
         T = inv(T); %为了提高运行效率，所以换过来算
         R0= T(1:3,1:3);
@@ -67,8 +73,14 @@ while(~isempty(id))
     end
 end
 Time = toc/60
-for i = 1:N 
-    shape{i,1}= clouds{i}.Location;
-end
+% shape=cell(N,1);
+% for i = 1:N 
+%     shape{i,1}= clouds{i}.Location;
+% end
+% for i = 1:N
+%     colorInfo{i}=clouds{i}.Color;
+% %     colorInfo{i}=data{i}(:,4:6);
+% end
 figure;
-Model=obtain_model(shape, p, N, s);
+
+Model=obtain_room_colorful(clouds, p, N, s);
