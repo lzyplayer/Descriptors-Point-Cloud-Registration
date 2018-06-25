@@ -1,3 +1,10 @@
+
+%% 真值结果读取
+   for i=1:size(icpList,1)
+        GrtM{i}=[icpList(i,1:4);icpList(i,5:8);icpList(i,9:12);icpList(i,13:16)];
+   end
+   GrtM=GrtM';
+   
 %% 真值误差
 %scannum=length(clouds);
 % for i=1:scannum
@@ -48,6 +55,8 @@ for i=1:length(clouds)
     pcshow(pcdenoise(colorful_clouds{i}));
     hold on;
 end
+
+
 
 
 

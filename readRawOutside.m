@@ -3,7 +3,7 @@ function [clouds,srcDesp,srcSeed,srcNorm ] = readRawOutside( filepath,filePrefix
 %   此处显示详细说明
     count=scannum-1; %从0开始
 %% 读取点云
-    clouds=readCloudCsv(filepath,filePrefix,count,-10,s); %去除地面点
+    clouds=readCloudCsv(filepath,filePrefix,count,0.02,s); %去除地面点
 %     count=count+1；
 % transmatrix=[-1 0 0 0
 %              0 0 -1 0
@@ -14,7 +14,9 @@ function [clouds,srcDesp,srcSeed,srcNorm ] = readRawOutside( filepath,filePrefix
     for j=1:scannum
 %%  读取数据
 %         clouds{j}=pointCloud(data{j}(:,1:3)./1000);
+tic
         [srcDesp{j},srcSeed{j},srcNorm{j}] = extractEig(clouds{j},gridstep);
+        toc
     end
 end
 
