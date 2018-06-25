@@ -3,26 +3,26 @@ clc;clear;close all;
 
 addpath('./flann/');
 addpath('./estimateRigidTransform');
-% load room;
 gridStep = 0.01;
 % filepath='./data/global_frame/';
 % filePrefix='PointCloud';
-filepath='./data/local_frame/';
-filePrefix='Hokuyo_';
-readnum=2;
+% filepath='./data/local_frame/';
+% filePrefix='Hokuyo_';
+% readnum=31;
 % datapath = './data/red_room/';
 % pre = 'bun';
 % scannum=length(dir(datapath))-2;
 % scannum=length(room);
+load room;
 overlap = 0.4;
 res= 1;
-s=30;
-% data=room;
-% [clouds,Desp,Seed,Norm] = readAllCloud(datapath,scannum,gridStep);
-% [clouds,Desp,Seed,Norm] = readRoom(data,gridStep);
-% [clouds,Desp,Seed,Norm] = readRedCloud(gridStep);
+s=1000;
+data=room;
 tic;
-[clouds,Desp,Seed,Norm] = readRawOutside(filepath,filePrefix,readnum,gridStep,s);
+% [clouds,Desp,Seed,Norm] = readAllCloud(datapath,scannum,gridStep);
+[clouds,Desp,Seed,Norm,colorful_clouds] = readRoom(data,gridStep,s);
+% [clouds,Desp,Seed,Norm] = readRedCloud(gridStep);
+% [clouds,Desp,Seed,Norm] = readRawOutside(filepath,filePrefix,readnum,gridStep,s);
 % [clouds,Desp,Seed,Norm] = readOutside(filepath,filePrefix,readnum,gridStep,s);
 N = length(clouds);
 p(1).M = eye(4);   
@@ -53,6 +53,8 @@ while(~isempty(id))
 %         dM= cal_mMSEs(Model);
         [MSE,R,t,TData,PCorr, Dthr] = TrICP(Model, Data, R0, t0, 100, overlap); %这个操作特别费时间
         num= num+1
+        if(num ==12)
+        end
         if (MSE > 2.0*mean(MSEs))
             continue;
         end
@@ -88,4 +90,4 @@ Time = toc/60
 % end
 figure;
 
-Model=obtain_room_colorful(clouds, p, N, s);
+% Model=obtain_room_colorful(clouds, p, N, s);
