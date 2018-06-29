@@ -1,3 +1,4 @@
+
 clc;clear;close all;
 gridStep=0.04;
 load  Clear_OutSide;
@@ -37,7 +38,9 @@ MotionbackUp=Motion;
 toc
 
 RotErr=norm((MotionbackUp(1:3,1:3)-GrtM{22}(1:3,1:3)),'fro')
-TranErr=norm((MotionbackUp(1:3,4)-GrtM{22}(1:3,4)),2)
+
+TranErr=norm((MotionbackUp(1:3,4)./s-GrtM{22}(1:3,4)),2)
+
 
 Motion=MotionbackUp;
 pnum=clouds{22}.Count;
@@ -46,6 +49,7 @@ Motion=Motion';
 Motion(4,1:3)=Motion(4,1:3)./s;
 pcshow( pctransform(toshow, affine3d(Motion)));
 hold on
+
 pcshow(fullPointCloud);
 %չʾ·��ͼ
 figure;
@@ -55,6 +59,7 @@ for i=1:N
     else
         cameraPosition(i,:)=cameraPosition(i-1,:);
     end
+
 end
 plot(cameraPosition(:,1),cameraPosition(:,2),'-*')
 hold on;
