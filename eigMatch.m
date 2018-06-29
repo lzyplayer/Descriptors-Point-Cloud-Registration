@@ -60,7 +60,7 @@ threshold = gridStep*gridStep;
             matches = [matches; m idx(ol)];
         end
     end
-    if(size(matches,1)>10)
+    if(size(matches,1)> max(0.05*size(tarDesp,2),10) )
         match_srcSeed = srcSeed(:,matches(:,1));
         match_tarSeed = tarSeed(:,matches(:,2));
         CS = ransac(double(match_srcSeed),double(match_tarSeed),threshold);   
@@ -80,7 +80,7 @@ threshold = gridStep*gridStep;
         [dist,ind] = sort(dist);        
         Err(n) = sum(sum((tarEst(:,index(ind(1:ovNum)))-tarSeed(:,ind(1:ovNum))).^2));
     end
-    if (size(matches,1)> 0.65*size(srcDesp,2))
+    if (size(matches,1)> 0.12*size(tarDesp,2))
         break;
     end
  end
