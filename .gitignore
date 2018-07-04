@@ -1,5 +1,9 @@
 *.mat
 *.asv
 /data
-/estimateRigidTransform
-/flann
+!apartment_CloudsClean.mat
+!apartment_FullClean_big.mat
+!apartment_GrT.mat
+!Clear_OutSide.mat
+!outside_regis_motion_result.mat
+!outside_GRT.mat
