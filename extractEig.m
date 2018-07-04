@@ -28,7 +28,7 @@ for k = 2:K
     srcIdx = rangesearch(srcData',srcSeed',radii(k));
     [sk,nk] = cellfun(@(x,y)svdCov(x,y,srcData,srcSeed),srcIdx,idx,'uni',false);
     s = [s cell2mat(sk)];
-    n = [n cell2mat(nk)];
+    n = [n cell2mat(nk)]; 
 end
 s = s';
 ds = diff(s);

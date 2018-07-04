@@ -17,7 +17,7 @@ ovNum = ceil(overlap*N);
 distThr = 0.2/4*length(radii); 
 thetaThr = 10; 
 threshold = gridStep*gridStep;
-  for i = 1:ceil(0.3*N)
+  for i = 1:ceil(0.5*N)
     n= id(i);
 %   for n = 1:N
     seed = srcSeed(:,seedIdx(n));
@@ -80,7 +80,7 @@ threshold = gridStep*gridStep;
         [dist,ind] = sort(dist);        
         Err(n) = sum(sum((tarEst(:,index(ind(1:ovNum)))-tarSeed(:,ind(1:ovNum))).^2));
     end
-    if (size(matches,1)> 0.12*size(tarDesp,2))
+    if (size(matches,1)> 0.15*size(tarDesp,2))
         break;
     end
  end

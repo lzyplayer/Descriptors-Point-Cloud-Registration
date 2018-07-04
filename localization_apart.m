@@ -1,33 +1,27 @@
 clc;clear;close all;
 gridStep=0.04;
-overlap=0.2;
+overlap=0.3;
 res=1;
 addpath('./flann');
 addpath('./estimateRigidTransform/');
-filepath='./data/global_frame_ap/';
-prefix='PointCloud';
+filepath='./data/local_frame_ap/';
+prefix='Hokuyo_';
 readNum=45;
 N=readNum;
-mergeGridStep=0.001;
+% mergeGridStep=0.0000005;
 s=15;
 relocoNum=10;%重定位几号
-fullPointCloud = readCloudAsOne(filepath,prefix,readNum,mergeGridStep,s,relocoNum);
-load apartment_noupper;
-load apartmentGrT;
+% load apartment_Grt;
+% fullPointCloud = readCloudAsOne(filepath,prefix,readNum,mergeGridStep,s,relocoNum,MotionGlobalGT);
 
-% fullPointCloud=clouds{1};
-% for i=2:N
-%     if(i~=relocoNum)
-%         transMatrix=p(i).M';
-%         transMatrix(4,1:3)=transMatrix(4,1:3)./s;
-%         transFormCloud{i}=pctransform(clouds{i},affine3d(transMatrix));
-%         fullPointCloud=pcmerge(fullPointCloud,transFormCloud{i},0.002);
-%     end
-% end
+load apartment_CloudsClean;
+load apartment_FullClean_big;
+load apartment_GrT;
 
-tic
+tic;
 [tarDesp,tarSeed,tarNorm] = extractEig(fullPointCloud,gridStep);
 [srcDesp,srcSeed,srcNorm] = extractEig(clouds{relocoNum},gridStep);
+toc;disp('des generated');
 T = eigMatch(tarDesp,srcDesp,tarSeed,srcSeed,tarNorm,srcNorm,overlap,gridStep);
 T = inv(T); 
 R0= T(1:3,1:3);
@@ -41,9 +35,9 @@ Motion=Rt2M(R0,t0);
 % Motion=Rt2M(R,t);
 % MotionbackUp=Motion;
 toc
-% % 
-% RotErr=norm((MotionbackUp(1:3,1:3)-MotionGrt{relocoNum}(1:3,1:3)),'fro')
-% TranErr=norm((MotionbackUp(1:3,4)-MotionGrt{relocoNum}(1:3,4)),2)
+
+RotErr=norm((MotionbackUp(1:3,1:3)-MotionGrt{relocoNum}(1:3,1:3)),'fro')
+TranErr=norm((MotionbackUp(1:3,4)-MotionGrt{relocoNum}(1:3,4))./s,2)
 
 % Motion=MotionbackUp;
 pnum=clouds{relocoNum}.Count;

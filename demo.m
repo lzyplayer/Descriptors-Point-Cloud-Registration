@@ -3,7 +3,7 @@ clc;clear;close all;
 addpath('./flann/');
 addpath('./estimateRigidTransform');
 
-gridStep = 0.01;
+gridStep = 0.02;
 datapath = './data';
 
 srcFileName = 'data/bun000.ply';

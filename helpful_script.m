@@ -1,32 +1,26 @@
 
-%% 真值结果读取
+%% csv全部点云根据真值配准
+
    for i=1:size(icpList,1)
         GrtM{i}=[icpList(i,1:4);icpList(i,5:8);icpList(i,9:12);icpList(i,13:16)];
    end
-   GrtM=GrtM';
+%    GrtM=GrtM';
    
 %% 真值误差
 %scannum=length(clouds);
 % for i=1:scannum
-%     Data_{i}=clouds{i}.Location;
-%     
+%     Data_{i}=clouds{i}.Location;    
 % end
-% 
 % RotErr=0;
 % TranErr=0;
 % scannum=length(GrtR);
-% 
 % for i=1:scannum
 %     RotErr=norm((p(i).M(1:3,1:3)-GrtR{i}),'fro')+RotErr;
 %     TranErr=norm((p(i).M(1:3,4)-GrtT{i}),2)+TranErr;
-%     
-%    
 % end
 % RotErr=RotErr/scannum
 % TranErr=TranErr/scannum
 %  RotLogErr=log(RotErr)
-% 
-% 
 
 
 % clc;
@@ -62,7 +56,7 @@ for i=1:length(clouds)
 %     curMotion=p(i).M;
 %     curMotion(1:3,4)=curMotion(1:3,4)./s;
     pcshow(pcdenoise(clouds{i}));
-
+end
 
 
 
