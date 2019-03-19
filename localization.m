@@ -50,13 +50,13 @@ end
 %
 Motion=MotionbackUp;
 pnum=clouds{tar}.Count;
-toshow=pointCloud(clouds{tar}.Location,'Color',uint8([ zeros(pnum,1) ones(pnum,1) zeros(pnum,1)]));
+toshow=pointCloud(clouds{tar}.Location,'Color',[ 225*ones(pnum,1) zeros(pnum,1) zeros(pnum,1)]);
 Motion=Motion';
 Motion(4,1:3)=Motion(4,1:3)./s;
-pcshow( pctransform(toshow, affine3d(Motion)));
-hold on
-
 pcshow(fullPointCloud);
+hold on
+pcshow( pctransform(toshow, affine3d(Motion)));
+
 xlabel('x');
 ylabel('y');
 zlabel('z');
